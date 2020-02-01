@@ -4,9 +4,15 @@ export const REQUEST_TRIP_FAILURE = 'REQUEST_TRIP_FAILURE';
 export const GET_LOCATIONS = 'GET_LOCATIONS';
 export const GET_ACCOMODATION_SUCCESS = 'GET_ACCOMODATION_SUCCESS';
 export const GET_ACCOMODATION_FAILURE = 'GET_ACCOMODATION_FAILURE';
+import { createBrowserHistory } from 'history';
+
 import { config } from 'dotenv';
 
 config();
+
+export const history = createBrowserHistory({
+	forceRefresh: true,
+});
 
 const userToken = `Bearer ${localStorage.getItem('token')}`;
 

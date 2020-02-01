@@ -13,9 +13,12 @@ import {
 	requestTrip,
 	GetAccomodations,
 	editTripRequest,
+	history,
 } from '../actions/tripRequestAction.js';
 import { connect } from 'react-redux';
 import withWidth from '@material-ui/core/withWidth';
+import { titleGenerator } from '../helpers/titleGenerator.js';
+import { setTitle } from '../actions/main.layout.action';
 
 const styles = {
 	tabs: {
@@ -141,6 +144,10 @@ export class TripRequest extends Component {
 			buttonState: true,
 			tripSubmitted: false,
 		};
+		!this.state.trip && this.props.history
+			? (this.props.history.push('/make-trip-request'),
+			  this.props.setTitle('Create Trip Request'))
+			: this.props.setTitle('Edit Trip Request');
 	}
 
 	handleIndexChange = (event, value) => {
@@ -459,9 +466,18 @@ export class TripRequest extends Component {
 						onChange={this.handleIndexChange}
 						style={styles.tabs}
 					>
-						<Tab label='One Way Trip' />
-						<Tab label='Round Trip' />
-						<Tab label='Multi City Trip' />
+						<Tab
+							label='One Way Trip'
+							disabled={this.props.trip && index !== 0 && true}
+						/>
+						<Tab
+							label='Round Trip'
+							disabled={this.props.trip && index !== 1 && true}
+						/>
+						<Tab
+							label='Multi City Trip'
+							disabled={this.props.trip && index !== 2 && true}
+						/>
 					</Tabs>
 					{this.state.index !== 2 ? (
 						<OneWay
@@ -688,6 +704,8 @@ const request = connect(mapStateToProps, {
 	requestTrip,
 	GetAccomodations,
 	editTripRequest,
+	history,
+	setTitle,
 })(withWidth()(TripRequest));
 
 export default request;

@@ -42,8 +42,6 @@ import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import MobileStepper from '@material-ui/core/MobileStepper';
 export const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
-import Footer from "../../components/common/footer";
-import { log } from 'util';
 import Footer from '../../components/common/footer';
 export const history = createBrowserHistory({
 	forceRefresh: true,
@@ -824,8 +822,7 @@ export class AccommodationFacility extends Component {
 					</Grid>
 				</Paper>
 
-				<Footer/>
-				
+				<Footer />
 			</div>
 		);
 	}
