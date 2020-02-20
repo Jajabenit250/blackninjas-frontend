@@ -1,20 +1,23 @@
+  
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
-import WelcomePage from '../views/WelcomePage';
-import LoginPage from '../views/LoginPage';
-
-export default function App() {
-        return (
-            <Router>
-            <Switch>
-              <Route path='/' exact component={WelcomePage} />
-              <Route path='/login' exact component={LoginPage} /> */}
-            </Switch>
-          
-          </Router>
-        );
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import DefaultLayout from '../layouts/default.layout.jsx';
+import MainLayout from '../layouts/main.layout.jsx';
+import { PrivateRoute } from '../components/auth/ProtectedRoute.jsx';
+class App extends Component {
+	
+	render() {
+		return (
+			<div className='app'>
+				<Router>
+					<Switch>
+						<Route path='/auth' component={DefaultLayout} />
+						<PrivateRoute path='/' component={MainLayout} />
+					</Switch>
+				</Router>
+			</div>
+		);
+	}
 }
+
+export default App;

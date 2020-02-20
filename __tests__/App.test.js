@@ -7,7 +7,5 @@ describe('Render root app component', () => {
         const wrapper = shallow(<App/>);
         expect(wrapper.find('Router').length).toBe(0);
         expect(wrapper.find('Switch').length).toBe(1);
-        expect(wrapper.find('Route').length).toBe(2);
-        
     })
 })

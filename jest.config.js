@@ -36,6 +36,9 @@ module.exports = {
     '!**/setupTests.js',
     '!**/src/index.js',
     '!**/jest.config.js',
+    '!**/src/theme.js',
+    '!**/src/reducers/index.js',
+    '!**/src/store/index.js',
   ],
 
   // The directory where Jest should output its coverage files
@@ -45,6 +48,7 @@ module.exports = {
   coveragePathIgnorePatterns: [
     "/node_modules/",
     "/__tests__",
+    "/src/store/"
   ],
 
   // A list of reporter names that Jest uses when writing coverage reports
@@ -54,7 +58,12 @@ module.exports = {
     "lcov",
     "clover"
   ],
-
+  coveragePathIgnorePatterns: [
+    "/node_modules/",	  
+    "/__tests__",	  
+    "/src/styles/",
+    "server.js"
+  ],	  
   // An object that configures minimum threshold enforcement for coverage results
   // coverageThreshold: undefined,
 
@@ -97,7 +106,7 @@ module.exports = {
   // A map from regular expressions to module names that allow to stub out resources with a single module
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-      '<rootDir>/__mocks__/fileMock.js',
+      'jest-transform-stub',
     '\\.(css|scss|sass)$': 'identity-obj-proxy'},
   
 
@@ -143,7 +152,7 @@ module.exports = {
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  // setupFiles: [],
+  setupFiles: ['jest-canvas-mock', 'jest-localstorage-mock'],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   setupFilesAfterEnv: [
@@ -151,7 +160,7 @@ module.exports = {
   ],
 
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
-  // snapshotSerializers: [],
+  snapshotSerializers: ['enzyme-to-json/serializer'],
 
   // The test environment that will be used for testing
   // testEnvironment: "jest-environment-jsdom",
