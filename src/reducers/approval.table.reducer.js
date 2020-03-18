@@ -1,6 +1,7 @@
 const initialState = {
 	tripRequests: [],
 	trip: [],
+	count: 0,
 	tripRequestsError: '',
 	successMessage: false,
 	errorMessage: false,
@@ -10,6 +11,8 @@ const approvalsTableReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case 'GET_TRIP_REQUESTS_SUCCESS':
 			const data = action.tripRequests.requestTrips;
+			console.log('==>:', action.tripRequests.count);
+
 			return {
 				...state,
 				tripRequests: [...data],

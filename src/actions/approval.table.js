@@ -20,10 +20,41 @@ export const getTripRequests = props => async dispatch => {
 			`${process.env.BACKEND_BASE_URL}/api/v1/trip-requests/?page=${props.page}&limit=${props.limit}`,
 			{ headers },
 		);
+		console.log(results.data.data);
 
 		dispatch({
 			type: GET_TRIP_REQUESTS_SUCCESS,
 			tripRequests: results.data.data,
+		});
+	} catch (error) {
+		dispatch({ type: GET_TRIP_REQUESTS_FAIL, tripRequestsError: true });
+	}
+};
+export const SearchTripRequests = e => async dispatch => {
+	const Token = `Bearer ${localStorage.getItem('token')}`;
+	const headers = {
+		'Content-Type': 'application/json',
+		token: Token,
+	};
+	try {
+		const results = await axios.get(
+			`${process.env.BACKEND_BASE_URL}/api/v1/trip-requests/search?keyword=${e.target.value}&searchType=managerId&page=1&limit=10`,
+			{ headers },
+		);
+		const data = {
+			count: results.data.data.length,
+			requestTrips: results.data.data,
+		};
+		data.requestTrips.map(trips => {
+			trips.map(trip => {
+				(trip.manager.firstName = trip.firstName),
+					(trip.manager.lastName = trip.lastName);
+			});
+		});
+
+		dispatch({
+			type: GET_TRIP_REQUESTS_SUCCESS,
+			tripRequests: data,
 		});
 	} catch (error) {
 		dispatch({ type: GET_TRIP_REQUESTS_FAIL, tripRequestsError: true });

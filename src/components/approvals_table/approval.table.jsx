@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,17 +11,19 @@ import TableRow from '@material-ui/core/TableRow';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import {
-	Box,
-	Hidden,
-	Grid,
-	Card,
-	CardContent,
-	CircularProgress,
-} from '@material-ui/core';
+import FormControl from '@material-ui/core/FormControl';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import CardContent from '@material-ui/core/CardContent';
+import SearchIcon from '@material-ui/icons/Search';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { Box, Hidden, Grid, Card } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getTripRequests } from '../../actions/approval.table';
+import {
+	getTripRequests,
+	SearchTripRequests,
+} from '../../actions/approval.table';
 import { setSelectedTripRequestAction } from '../../actions/approval.table';
 import Moment from 'react-moment';
 
@@ -44,6 +47,12 @@ const useStyles = makeStyles(theme => ({
 	},
 	container: {
 		maxHeight: 550,
+	},
+	margin: {
+		margin: theme.spacing(1),
+	},
+	textField: {
+		width: '25ch',
 	},
 }));
 
@@ -99,6 +108,31 @@ export const ApprovalsTable = props => {
 
 	return (
 		<Paper>
+			<Grid container justify='center'>
+				<Grid xs={11} xl={6} ms={6} item>
+					<FormControl
+						style={{ width: '99%' }}
+						className={clsx(classes.margin, classes.textField)}
+						variant='outlined'
+					>
+						<OutlinedInput
+							style={{ backgroundColor: '#F1F1F1', border: '0px' }}
+							id='outlined-adornment-weight'
+							// value={values.weight}
+							onChange={e => props.SearchTripRequests(e)}
+							startAdornment={
+								<InputAdornment position='start'>
+									<SearchIcon />
+								</InputAdornment>
+							}
+							aria-describedby='outlined-weight-helper-text'
+							inputProps={{
+								'aria-label': 'search',
+							}}
+						/>
+					</FormControl>
+				</Grid>
+			</Grid>
 			<Toolbar>
 				<Typography variant='h6' id='tableTitle'>
 					Trip Requests
@@ -339,6 +373,8 @@ export const ApprovalsTable = props => {
 };
 
 export const mapStateToProps = state => {
+	console.log('----->', state.approvalsTableReducer.tripRequests);
+
 	return {
 		trips: state.approvalsTableReducer.tripRequests,
 		count: state.approvalsTableReducer.count,
@@ -348,4 +384,5 @@ export const mapStateToProps = state => {
 export default connect(mapStateToProps, {
 	getTripRequests,
 	setSelectedTripRequestAction,
+	SearchTripRequests,
 })(withRouter(ApprovalsTable));
