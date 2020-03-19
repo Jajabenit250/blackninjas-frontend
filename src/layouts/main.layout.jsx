@@ -19,6 +19,7 @@ import TripRequest from "../views/triprequest.view.jsx";
 import ApprovalTable from "../components/approvals_table/approval.table.jsx";
 import ApprovalsTripRequest from "../components/approvals_table/trip.request.jsx";
 import UserStatistics from "../components/UserStatistics.jsx";
+import { SideChatComponent } from "../components/chat/SideChatComponent.jsx";
 
 const drawerWidth = 240;
 
@@ -133,11 +134,12 @@ const MainLayout = props => {
             <Route path="/trips/:id" component={Request} />
             <Route path="/trips" component={Requests} />
             <Route path="/trips-stats" component={UserStatistics} />
-			<Route path='/user/user-role-setting' component={UserRoleSetting} />
+            <Route path="/user/user-role-setting" component={UserRoleSetting} />
             <Route path="/user-management" component={UserManagement} />
             <Route path="/make-trip-request" exact component={TripRequest} />
             <Route path="/approval-table" component={ApprovalTable} />
             <Route path="/trip-request" component={ApprovalsTripRequest} />
+            <Route path="/messages" component={SideChatComponent} />
           </Switch>
         </main>
       </div>
