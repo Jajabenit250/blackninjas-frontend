@@ -4,7 +4,6 @@ import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 import NotificationPane from "../notification/notificationPane.jsx";
 import { connect } from "react-redux";
 import { GetNotifications } from "../../actions/notificationPane";
-import { createBrowserHistory } from "history";
 
 const style = {
   borderRadius: "50%",
@@ -18,14 +17,12 @@ const style = {
   color: "#FFF",
   float: "right"
 };
-const history = createBrowserHistory({
-  forceRefresh: true
-});
 
 export class TopNavBar extends Component {
   state = {
     notificationCounter: 0,
-    notification: ""
+    notification: "",
+    changeSideNav: false
   };
 
   count = notifications => {
@@ -46,7 +43,7 @@ export class TopNavBar extends Component {
   };
 
   render() {
-    const { notifications } = this.props;
+    const { notifications, onClick } = this.props;
     return (
       <>
         {notifications && (
@@ -56,9 +53,7 @@ export class TopNavBar extends Component {
                 src="https://res.cloudinary.com/dby88h516/image/upload/v1580893608/email_1_jupvlq.svg"
                 width="100%"
                 height="24px"
-                onClick={() => {
-                  history.push("/messages");
-                }}
+                onClick={onClick}
               />
             </Box>
             <Box pl={1} style={{ marginTop: "10px" }}>

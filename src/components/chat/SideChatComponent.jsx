@@ -1,6 +1,6 @@
 import React from "react";
 
-export const SideChatComponent = () => {
+export const ChatComponent = () => {
   return (
     <div>
       <h1>Hello World!!</h1>

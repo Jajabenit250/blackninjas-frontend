@@ -1,5 +1,11 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
+import { createBrowserHistory } from "history";
 import AppBar from "@material-ui/core/AppBar";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
@@ -19,7 +25,7 @@ import TripRequest from "../views/triprequest.view.jsx";
 import ApprovalTable from "../components/approvals_table/approval.table.jsx";
 import ApprovalsTripRequest from "../components/approvals_table/trip.request.jsx";
 import UserStatistics from "../components/UserStatistics.jsx";
-import { SideChatComponent } from "../components/chat/SideChatComponent.jsx";
+import { ChatComponent } from "../components/chat/SideChatComponent.jsx";
 
 const drawerWidth = 240;
 
@@ -55,6 +61,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const history = createBrowserHistory({
+  forceRefresh: true
+});
 const MainLayout = props => {
   const matches = useMediaQuery("(max-width: 767px)");
 
@@ -63,13 +72,22 @@ const MainLayout = props => {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const [shouldChangeSideNav, setshouldChangeSideNav] = useState(false);
+  const changeSideNav = () => {
+    setshouldChangeSideNav(true);
+    // history.push("/messages");
+  };
+  console.log("trueeeeeee=====>", history);
   const drawer = (
     <div>
-      <SideNavBarPage />
+      <SideNavBarPage
+        history={history.location.pathname === "/messages" ? history : ""}
+      />
     </div>
   );
-  return (
+  return shouldChangeSideNav ? (
+    history.push("/messages")
+  ) : (
     <Router>
       <div className={classes.root}>
         <AppBar
@@ -90,7 +108,7 @@ const MainLayout = props => {
             >
               <MenuIcon />
             </IconButton>
-            <TopNavBar />
+            <TopNavBar onClick={changeSideNav} />
           </Toolbar>
         </AppBar>
         <nav className={classes.drawer} aria-label="mailbox folders">
@@ -139,7 +157,7 @@ const MainLayout = props => {
             <Route path="/make-trip-request" exact component={TripRequest} />
             <Route path="/approval-table" component={ApprovalTable} />
             <Route path="/trip-request" component={ApprovalsTripRequest} />
-            <Route path="/messages" component={SideChatComponent} />
+            <Route path="/messages" component={ChatComponent} />
           </Switch>
         </main>
       </div>
