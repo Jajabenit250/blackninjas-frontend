@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   count: {
     width: "18px",
     height: "18px",
-    marginLeft: "1vw",
+    marginLeft: "3vw",
     borderRadius: "50%",
     background: "#0094FF",
     fontWeight: 500,
@@ -35,8 +35,9 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }));
-export default function SideNavBarPage(props) {
+export default function SideNavBarPage({ history, onClick, count }) {
   const classes = useStyles();
+
   return (
     <Box style={{ minHeight: "10px", marginBottom: "20px" }}>
       <div className="dashboard_side-nav-bar_logo">
@@ -48,15 +49,14 @@ export default function SideNavBarPage(props) {
           onClick={() => history.push("/")}
         />
       </div>
-      <div style={{ display: props.history ? "none" : "" }}>
+      <div style={{ display: history ? "none" : "" }}>
         <UserProfile />
         <Navlinks />
       </div>
-      <div style={{ display: props.history ? "block" : "none" }}>
+      <div style={{ display: history ? "block" : "none" }}>
         <Grid
           container
           justify="center"
-          fullWidth={true}
           style={{ marginTop: "2vw", marginLeft: "3px", width: "97%" }}
         >
           <TextField
@@ -74,10 +74,16 @@ export default function SideNavBarPage(props) {
           justify="flex-start"
           alignItems="center"
           className={classes.grid}
+          onClick={onClick}
         >
           <QuestionAnswerIcon />
           <p style={{ marginLeft: "1vw" }}>Public Messages</p>
-          <div className={classes.count}>3</div>
+          <div
+            style={{ display: count === 0 ? "none" : "block" }}
+            className={classes.count}
+          >
+            {count}
+          </div>
         </Grid>
       </div>
     </Box>

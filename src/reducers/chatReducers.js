@@ -1,4 +1,4 @@
-const tripStatisticsReducer = (
+const chatReducer = (
   state = { isLoading: false, publicMessages: {} },
   action
 ) => {
@@ -6,7 +6,7 @@ const tripStatisticsReducer = (
     case "IS_LOADER":
       return {
         ...state,
-        isLoading: !isLoading
+        isLoading: !state.isLoading
       };
     case "GET_PUBLIC_MESSAGES":
       return {
@@ -19,4 +19,4 @@ const tripStatisticsReducer = (
   }
 };
 
-export default tripStatisticsReducer;
+export default chatReducer;

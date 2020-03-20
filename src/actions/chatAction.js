@@ -15,12 +15,13 @@ export const getPublicMessages = () => async dispatch => {
     { headers }
   );
   dispatch(
-    {
-      type: IS_LOADER
-    },
-    {
-      type: GET_PUBLIC_MESSAGES,
-      payload: publicMessages.data.data
-    }
+    !publicMessages
+      ? {
+          type: IS_LOADER
+        }
+      : {
+          type: GET_PUBLIC_MESSAGES,
+          payload: publicMessages.data.data
+        }
   );
 };
