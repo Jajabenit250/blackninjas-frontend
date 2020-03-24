@@ -26,7 +26,7 @@ import TripRequest from "../views/triprequest.view.jsx";
 import ApprovalTable from "../components/approvals_table/approval.table.jsx";
 import ApprovalsTripRequest from "../components/approvals_table/trip.request.jsx";
 import UserStatistics from "../components/UserStatistics.jsx";
-import { ChatComponent } from "../components/chat/ChatComponent.jsx";
+import { Chat } from "../components/chat/Chat.jsx";
 import { getPublicMessages } from "../actions/chatAction";
 
 const drawerWidth = 240;
@@ -66,46 +66,38 @@ const useStyles = makeStyles(theme => ({
 const history = createBrowserHistory({
   forceRefresh: true
 });
+
 const MainLayout = props => {
   const matches = useMediaQuery("(max-width: 767px)");
-  const publicMessages = useSelector(state => state.chatReducer.publicMessages);
+  const publicMessages = useSelector(
+    state => state.chatReducer.receivedMessages
+  );
+  const userProfile = useSelector(
+    state => state.userProfileReducer.userProfileInfo
+  );
+
   const dispatch = useDispatch();
   const appBarCss = matches ? "1px 1px gray" : "0px 0px white";
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [shouldChangeSideNav, setshouldChangeSideNav] = useState(false);
-  const [passProps, setpassProps] = useState(false);
-  const [isRead, setisRead] = useState(false);
-
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(5);
+  const [isRead, setIsRead] = useState(false);
   useEffect(() => {
     const awaitData = async () => {
-      await dispatch(getPublicMessages());
+      dispatch(getPublicMessages(limit, page));
     };
     awaitData();
   }, []);
 
-  const changeSideNav = () => {
-    setshouldChangeSideNav(true);
-  };
-
-  const retrievePublicMessages = () => {
-    setpassProps(true);
-    setisRead(true);
-  };
   const drawer = (
     <div>
-      <SideNavBarPage
-        count={!isRead ? publicMessages.length : 0}
-        onClick={retrievePublicMessages}
-        history={history.location.pathname === "/messages" ? history : ""}
-      />
+      <SideNavBarPage />
     </div>
   );
-  return shouldChangeSideNav ? (
-    history.push("/messages")
-  ) : (
+  return (
     <Router>
       <div className={classes.root}>
         <AppBar
@@ -126,7 +118,14 @@ const MainLayout = props => {
             >
               <MenuIcon />
             </IconButton>
-            <TopNavBar onClick={changeSideNav} />
+            <TopNavBar
+              sender={userProfile && userProfile.id === }
+              count={
+                publicMessages && publicMessages.count > 0
+                  ? publicMessages.count
+                  : 0
+              }
+            />
           </Toolbar>
         </AppBar>
         <nav className={classes.drawer} aria-label="mailbox folders">
@@ -175,18 +174,7 @@ const MainLayout = props => {
             <Route path="/make-trip-request" exact component={TripRequest} />
             <Route path="/approval-table" component={ApprovalTable} />
             <Route path="/trip-request" component={ApprovalsTripRequest} />
-            <Route
-              path="/messages"
-              render={props => (
-                <ChatComponent
-                  {...props}
-                  publicMessages={
-                    publicMessages ? publicMessages : <p>Wait....</p>
-                  }
-                  passProps={passProps}
-                />
-              )}
-            />
+            <Route path="/messages" component={Chat} />
           </Switch>
         </main>
       </div>
