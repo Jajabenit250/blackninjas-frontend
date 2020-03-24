@@ -72,6 +72,7 @@ describe('Trip requests actions tests', () => {
 	});
 
 	it('should set selected trip request', async () => {
+<<<<<<< HEAD
 		const middlewares = [thunk];
 		const mockStore = configureMockStore(middlewares);
 		const store = mockStore();
@@ -93,6 +94,32 @@ describe('Trip requests actions tests', () => {
 		await store.dispatch(
 			setSelectedTripRequestAction([
 				{
+=======
+		await store.dispatch(
+			setSelectedTripRequestAction({
+				id: 1,
+				origin: 'Kigali',
+				destination: 'Kincasa',
+				tripId: 'b4c99c41-9d2a-42f1-9a4c-65111d48e0d4',
+				tripTripId: 2,
+				tripType: 'one way',
+				status: 'pending',
+				accomodation: 'fgfghftjghv',
+				departureDate: '2020-09-12T00:00:00.000Z',
+				returnDate: '2020-02-01T22:00:00.000Z',
+				createdAt: '2020-02-19T19:58:30.638Z',
+				manager: {
+					firstName: 'Dominique',
+					lastName: 'Nsengimana',
+				},
+			}),
+		);
+		const calledActions = store.getActions();
+		expect(calledActions).toEqual([
+			{
+				type: 'SET_SELLECTED_TRIP',
+				payload: {
+>>>>>>> feature(search): add trip request search
 					id: 1,
 					origin: 'Kigali',
 					destination: 'Kincasa',
@@ -109,12 +136,17 @@ describe('Trip requests actions tests', () => {
 						lastName: 'Nsengimana',
 					},
 				},
+<<<<<<< HEAD
 				{},
 			]),
 		);
 		const calledActions = store.getActions();
 		expect(calledActions[0].type).toEqual('SET_SELLECTED_TRIP');
 		expect(calledActions[1].type).toEqual('SET_TRIP_TO_EDIT');
+=======
+			},
+		]);
+>>>>>>> feature(search): add trip request search
 	});
 	it('should catch error', async () => {
 		moxios.wait(() => {

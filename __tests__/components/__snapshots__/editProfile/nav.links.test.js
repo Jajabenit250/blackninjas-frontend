@@ -85,6 +85,7 @@ describe('Top navigation bar component', () => {
 		expect(location).toBe('/create-accommodations');
 	});
 
+<<<<<<< HEAD
 	it('should handle onclick event of dashboard link', () => {
 		const wrapper = shallow(<NavLinks />);
 
@@ -92,6 +93,8 @@ describe('Top navigation bar component', () => {
 		const location = wrapper.state().location;
 		expect(location).toBe('/');
 	});
+=======
+>>>>>>> feature(search): add trip request search
 	it('should handle onclick event of trips link', () => {
 		const wrapper = shallow(<NavLinks />);
 		window.location.pathname = '/user/user-role-setting';

@@ -20,6 +20,10 @@ export const getTripRequests = props => async dispatch => {
 			`${process.env.BACKEND_BASE_URL}/api/v1/trip-requests/?page=${props.page}&limit=${props.limit}`,
 			{ headers },
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature(search): add trip request search
 		dispatch({
 			type: GET_TRIP_REQUESTS_SUCCESS,
 			tripRequests: results.data.data,

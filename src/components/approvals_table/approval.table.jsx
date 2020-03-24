@@ -108,6 +108,7 @@ export const ApprovalsTable = props => {
 
 	return (
 		<Paper>
+<<<<<<< HEAD
 			{props.trips.length > 0 && (
 				<Grid container justify='center'>
 					<Grid xs={11} xl={6} ms={6} item>
@@ -132,6 +133,30 @@ export const ApprovalsTable = props => {
 							/>
 						</FormControl>
 					</Grid>
+=======
+			<Grid container justify='center'>
+				<Grid xs={11} xl={6} ms={6} item>
+					<FormControl
+						style={{ width: '99%' }}
+						className={clsx(classes.margin, classes.textField)}
+						variant='outlined'
+					>
+						<OutlinedInput
+							style={{ backgroundColor: '#F1F1F1', border: '0px' }}
+							id='outlined_adornment_weight'
+							onChange={e => props.SearchTripRequests(e)}
+							startAdornment={
+								<InputAdornment position='start'>
+									<SearchIcon />
+								</InputAdornment>
+							}
+							aria-describedby='outlined-weight-helper-text'
+							inputProps={{
+								'aria-label': 'search',
+							}}
+						/>
+					</FormControl>
+>>>>>>> feature(search): add trip request search
 				</Grid>
 			)}
 			<Toolbar>
