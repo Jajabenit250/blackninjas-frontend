@@ -108,31 +108,32 @@ export const ApprovalsTable = props => {
 
 	return (
 		<Paper>
-			<Grid container justify='center'>
-				<Grid xs={11} xl={6} ms={6} item>
-					<FormControl
-						style={{ width: '99%' }}
-						className={clsx(classes.margin, classes.textField)}
-						variant='outlined'
-					>
-						<OutlinedInput
-							style={{ backgroundColor: '#F1F1F1', border: '0px' }}
-							id='outlined-adornment-weight'
-							// value={values.weight}
-							onChange={e => props.SearchTripRequests(e)}
-							startAdornment={
-								<InputAdornment position='start'>
-									<SearchIcon />
-								</InputAdornment>
-							}
-							aria-describedby='outlined-weight-helper-text'
-							inputProps={{
-								'aria-label': 'search',
-							}}
-						/>
-					</FormControl>
+			{props.trips.length > 0 && (
+				<Grid container justify='center'>
+					<Grid xs={11} xl={6} ms={6} item>
+						<FormControl
+							style={{ width: '99%' }}
+							className={clsx(classes.margin, classes.textField)}
+							variant='outlined'
+						>
+							<OutlinedInput
+								style={{ backgroundColor: '#F1F1F1', border: '0px' }}
+								id='outlined_adornment_weight'
+								onChange={e => props.SearchTripRequests(e)}
+								startAdornment={
+									<InputAdornment position='start'>
+										<SearchIcon />
+									</InputAdornment>
+								}
+								aria-describedby='outlined-weight-helper-text'
+								inputProps={{
+									'aria-label': 'search',
+								}}
+							/>
+						</FormControl>
+					</Grid>
 				</Grid>
-			</Grid>
+			)}
 			<Toolbar>
 				<Typography variant='h6' id='tableTitle'>
 					Trip Requests
@@ -185,7 +186,7 @@ export const ApprovalsTable = props => {
 											key={index}
 										>
 											<TableCell align='left'>
-												{row[0].manager.firstName} {row[0].manager.lastName}
+												{row[0].firstName} {row[0].lastName}
 											</TableCell>
 											<TableCell align='center'>
 												{locationManager(row)}
@@ -261,7 +262,7 @@ export const ApprovalsTable = props => {
 													</Typography>
 												</Grid>
 												<Grid item>
-													{item[0].manager.firstName} {item[0].manager.lastName}
+													{item[0].firstName} {item[0].lastName}
 												</Grid>
 											</Grid>
 											<Grid item container justify='space-between'>
@@ -373,8 +374,6 @@ export const ApprovalsTable = props => {
 };
 
 export const mapStateToProps = state => {
-	console.log('----->', state.approvalsTableReducer.tripRequests);
-
 	return {
 		trips: state.approvalsTableReducer.tripRequests,
 		count: state.approvalsTableReducer.count,

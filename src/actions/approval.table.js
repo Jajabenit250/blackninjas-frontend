@@ -20,7 +20,6 @@ export const getTripRequests = props => async dispatch => {
 			`${process.env.BACKEND_BASE_URL}/api/v1/trip-requests/?page=${props.page}&limit=${props.limit}`,
 			{ headers },
 		);
-		console.log(results.data.data);
 
 		dispatch({
 			type: GET_TRIP_REQUESTS_SUCCESS,
@@ -45,12 +44,6 @@ export const SearchTripRequests = e => async dispatch => {
 			count: results.data.data.length,
 			requestTrips: results.data.data,
 		};
-		data.requestTrips.map(trips => {
-			trips.map(trip => {
-				(trip.manager.firstName = trip.firstName),
-					(trip.manager.lastName = trip.lastName);
-			});
-		});
 
 		dispatch({
 			type: GET_TRIP_REQUESTS_SUCCESS,

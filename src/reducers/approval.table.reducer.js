@@ -11,8 +11,6 @@ const approvalsTableReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case 'GET_TRIP_REQUESTS_SUCCESS':
 			const data = action.tripRequests.requestTrips;
-			console.log('==>:', action.tripRequests.count);
-
 			return {
 				...state,
 				tripRequests: [...data],

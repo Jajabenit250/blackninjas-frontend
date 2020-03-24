@@ -40,12 +40,6 @@ export const SearchTripRequests = e => async dispatch => {
 			count: results.data.data.length,
 			requestTrips: results.data.data,
 		};
-		data.requestTrips.map(trips => {
-			trips.map(trip => {
-				(trip.manager.firstName = trip.firstName),
-					(trip.manager.lastName = trip.lastName);
-			});
-		});
 
 		dispatch({
 			type: 'GET_USER_TRIP_REQUESTS_SUCCESS',
