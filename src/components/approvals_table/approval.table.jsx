@@ -108,7 +108,6 @@ export const ApprovalsTable = props => {
 
 	return (
 		<Paper>
-<<<<<<< HEAD
 			{props.trips.length > 0 && (
 				<Grid container justify='center'>
 					<Grid xs={11} xl={6} ms={6} item>
@@ -120,6 +119,7 @@ export const ApprovalsTable = props => {
 							<OutlinedInput
 								style={{ backgroundColor: '#F1F1F1', border: '0px' }}
 								id='outlined_adornment_weight'
+								placeholder='Search by attribute like names,status, return date etc...'
 								onChange={e => props.SearchTripRequests(e)}
 								startAdornment={
 									<InputAdornment position='start'>
@@ -133,36 +133,10 @@ export const ApprovalsTable = props => {
 							/>
 						</FormControl>
 					</Grid>
-=======
-			<Grid container justify='center'>
-				<Grid xs={11} xl={6} ms={6} item>
-					<FormControl
-						style={{ width: '99%' }}
-						className={clsx(classes.margin, classes.textField)}
-						variant='outlined'
-					>
-						<OutlinedInput
-							style={{ backgroundColor: '#F1F1F1', border: '0px' }}
-							id='outlined_adornment_weight'
-							onChange={e => props.SearchTripRequests(e)}
-							startAdornment={
-								<InputAdornment position='start'>
-									<SearchIcon />
-								</InputAdornment>
-							}
-							aria-describedby='outlined-weight-helper-text'
-							inputProps={{
-								'aria-label': 'search',
-							}}
-						/>
-					</FormControl>
->>>>>>> feature(search): add trip request search
 				</Grid>
 			)}
 			<Toolbar>
-				<Typography variant='h6' id='tableTitle'>
-					Trip Requests
-				</Typography>
+				<Typography variant='h6' id='tableTitle'></Typography>
 			</Toolbar>
 			<Hidden mdDown>
 				<TableContainer
@@ -200,54 +174,62 @@ export const ApprovalsTable = props => {
 							</TableBody>
 						) : (
 							<TableBody>
-								{props.trips.map((row, index) => {
-									return (
-										<TableRow
-											onClick={event => handleClick(props, row)}
-											id='tableRow'
-											hover
-											role='checkbox'
-											tabIndex={-1}
-											key={index}
-										>
-											<TableCell align='left'>
-												{row[0].firstName} {row[0].lastName}
-											</TableCell>
-											<TableCell align='center'>
-												{locationManager(row)}
-											</TableCell>
-											<TableCell align='center'>{row[0].tripType}</TableCell>
-											<TableCell
-												align='center'
-												style={{ color: `${statusColor(row[0].status)}` }}
+								{props.searchError ? (
+									<TableRow>
+										<TableCell colSpan={7} align='center'>
+											{'Ooops ! No related record found'}
+										</TableCell>
+									</TableRow>
+								) : (
+									props.trips.map((row, index) => {
+										return (
+											<TableRow
+												onClick={event => handleClick(props, row)}
+												id='tableRow'
+												hover
+												role='checkbox'
+												tabIndex={-1}
+												key={index}
 											>
-												{row[0].status.charAt(0).toUpperCase() +
-													row[0].status.slice(1)}
-											</TableCell>
-											<TableCell align='center'>
-												{row[0].accomodation}
-											</TableCell>
-											<TableCell align='center'>
-												{`${row[0].departureDate}` != 'null' ? (
-													<Moment format='D MMM YYYY'>
-														{row[0].departureDate}
-													</Moment>
-												) : (
-													'-'
-												)}
-											</TableCell>
-											<TableCell align='center'>
-												{`${row[0].returnDate}` != 'null' ? (
-													<Moment format='D MMM YYYY'>
-														{row[0].returnDate}
-													</Moment>
-												) : (
-													'-'
-												)}
-											</TableCell>
-										</TableRow>
-									);
-								})}
+												<TableCell align='left'>
+													{row[0].firstName} {row[0].lastName}
+												</TableCell>
+												<TableCell align='center'>
+													{locationManager(row)}
+												</TableCell>
+												<TableCell align='center'>{row[0].tripType}</TableCell>
+												<TableCell
+													align='center'
+													style={{ color: `${statusColor(row[0].status)}` }}
+												>
+													{row[0].status.charAt(0).toUpperCase() +
+														row[0].status.slice(1)}
+												</TableCell>
+												<TableCell align='center'>
+													{row[0].accomodation}
+												</TableCell>
+												<TableCell align='center'>
+													{`${row[0].departureDate}` != 'null' ? (
+														<Moment format='D MMM YYYY'>
+															{row[0].departureDate}
+														</Moment>
+													) : (
+														'-'
+													)}
+												</TableCell>
+												<TableCell align='center'>
+													{`${row[0].returnDate}` != 'null' ? (
+														<Moment format='D MMM YYYY'>
+															{row[0].returnDate}
+														</Moment>
+													) : (
+														'-'
+													)}
+												</TableCell>
+											</TableRow>
+										);
+									})
+								)}
 							</TableBody>
 						)}
 					</Table>
@@ -402,6 +384,7 @@ export const mapStateToProps = state => {
 	return {
 		trips: state.approvalsTableReducer.tripRequests,
 		count: state.approvalsTableReducer.count,
+		searchError: state.approvalsTableReducer.searchError,
 	};
 };
 

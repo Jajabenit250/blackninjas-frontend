@@ -15,7 +15,7 @@ import {
 	createAccomodationFacility,
 	createAccommodationSuccess,
 	cardClicked,
-	handleDeleteAccommodation
+	handleDeleteAccommodation,
 } from '../../actions/accommodationFacilitiesActions';
 import { Styles } from '../../styles/createAccommodation';
 import Box from '@material-ui/core/Box';
@@ -43,6 +43,7 @@ import { autoPlay } from 'react-swipeable-views-utils';
 import MobileStepper from '@material-ui/core/MobileStepper';
 export const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 import { log } from 'util';
+import Footer from '../../components/common/footer';
 export const history = createBrowserHistory({
 	forceRefresh: true,
 });
@@ -56,7 +57,7 @@ export class AccommodationFacility extends Component {
 			locationId: '',
 			owner: '',
 			category: '',
-			images:  this.props.images,
+			images: this.props.images,
 			amenities: [],
 			services: [],
 			serviceName: '',
@@ -95,8 +96,8 @@ export class AccommodationFacility extends Component {
 				},
 			],
 			activeItemIndex: 0,
-		deleted:false,
-		isRooChipDeleted:false
+			deleted: false,
+			isRooChipDeleted: false,
 		};
 	}
 
@@ -132,7 +133,7 @@ export class AccommodationFacility extends Component {
 			history.push('/accommodations');
 		}
 	}
-	uploadAccommodationImage = async (e )=> {
+	uploadAccommodationImage = async e => {
 		this.state.files.push(...e.target.files);
 		const files = [...e.target.files];
 		files.map((file, index) => {
@@ -140,8 +141,7 @@ export class AccommodationFacility extends Component {
 			data.append('file', files[index]);
 			data.append('upload_preset', 'barefootnomad');
 
-		this.props.uploadNewImageOnCloud(data,index);
-		
+			this.props.uploadNewImageOnCloud(data, index);
 		});
 		this.setState({
 			files: [],
@@ -177,7 +177,6 @@ export class AccommodationFacility extends Component {
 		const rooms = this.state.rooms;
 		rooms.map((room, index) => {
 			if (index === Index1) {
-				console.log('====>>>>',room);
 				if (event.target.id !== 'standard-search') {
 					room[name] = value;
 				}
@@ -254,22 +253,21 @@ export class AccommodationFacility extends Component {
 			this.setState({ activeItemIndex: this.state.activeItemIndex - 1 });
 		}
 	};
-	handleDeleteAccommodation = key =>{
+	handleDeleteAccommodation = key => {
 		this.props.images.splice(key, 1);
-		this.props.handleDeleteAccommodation(this.props.images)
+		this.props.handleDeleteAccommodation(this.props.images);
 		this.setState({
-			deleted:true
-		})
-
-	}
+			deleted: true,
+		});
+	};
 	handleDeleteServiceChipCard = IndexName => {
 		this.state.services.splice(this.state.services.indexOf(IndexName), 1);
 	};
-	handleDeleteRoomChipCard = (cardId)=> {
+	handleDeleteRoomChipCard = cardId => {
 		this.props.RoomImagesResult.splice(cardId, 1);
 		this.setState({
-			isRooChipDeleted:true
-		})
+			isRooChipDeleted: true,
+		});
 	};
 	handleDeleteAmenityChipCard = IndexName => {
 		this.state.amenities.splice(this.state.amenities.indexOf(IndexName), 1);
@@ -311,7 +309,6 @@ export class AccommodationFacility extends Component {
 			});
 		});
 
-
 		this.props.RoomImagesResult.map((image, index) => {
 			this.state.roomImagesState.push({ key: index, imageUrl: image.image });
 		});
@@ -319,17 +316,6 @@ export class AccommodationFacility extends Component {
 		return (
 			<div className={classes.root}>
 				<Paper className={classes.paper} elevation={3}>
-					<Typography
-						style={{
-							fontSize: 19,
-							color: 'black',
-							textAlign: 'center',
-							fontWeight: 'bold',
-						}}
-						className={classes.title}
-					>
-						Create Accommodations
-					</Typography>
 					<Box m={2} />
 					<Grid container direction='column' alignItems='center'>
 						<Box m={2} />
@@ -359,7 +345,7 @@ export class AccommodationFacility extends Component {
 												onChange={this.handleChange.bind(this)}
 												required
 											/>
-											 <Box m={6} />
+											<Box m={6} />
 											<TextField
 												name='description'
 												type='name'
@@ -370,7 +356,7 @@ export class AccommodationFacility extends Component {
 												variant='outlined'
 												onChange={this.handleChange.bind(this)}
 											/>
-											 <Box m={6} />
+											<Box m={6} />
 											<Autocomplete
 												data-test='accommodation-location-field'
 												id='combo-box-demo'
@@ -423,7 +409,6 @@ export class AccommodationFacility extends Component {
 												onChange={this.handleChange.bind(this)}
 												required
 											/>
-											 
 										</form>
 									</Card>
 								</Grid>
@@ -452,7 +437,6 @@ export class AccommodationFacility extends Component {
 										<Box m={4} />
 										<div className={classes.Chip}>
 											{this.props.images.map((data, index) => {
-										
 												return (
 													<>
 														<Chip
@@ -499,7 +483,7 @@ export class AccommodationFacility extends Component {
 												onChange={this.handleChange.bind(this)}
 												required
 											/>
-											 <Box m={6} />
+											<Box m={6} />
 											<TextField
 												name='description'
 												type='name'
@@ -510,11 +494,12 @@ export class AccommodationFacility extends Component {
 												variant='outlined'
 												onChange={this.handleChange.bind(this)}
 											/>
-											 <Box m={6} />
+											<Box m={6} />
 											<Autocomplete
 												data-test='accommodation-location-field'
 												id='combo-box-demo'
 												options={rows}
+												className={classes.Autocomplete}
 												getOptionLabel={option => option.city}
 												style={{ width: 300 }}
 												onChange={(e, value) => {
@@ -563,7 +548,6 @@ export class AccommodationFacility extends Component {
 												onChange={this.handleChange.bind(this)}
 												required
 											/>
-											 
 										</form>
 									</Card>
 								</Grid>
@@ -593,8 +577,8 @@ export class AccommodationFacility extends Component {
 											{this.props.images.map((data, index) => {
 												return (
 													<>
-													<Chip
-															data-test="accommodation-image-chip-small"
+														<Chip
+															data-test='accommodation-image-chip-small'
 															style={{ marginTop: '2px', marginLeft: '2px' }}
 															label={`image ${index + 1}`}
 															onDelete={() => {
@@ -610,7 +594,7 @@ export class AccommodationFacility extends Component {
 								</Grid>
 							</Grid>
 						</Hidden>
-						 <Box m={2} />
+						<Box m={2} />
 						<Typography
 							style={{ fontSize: 15, color: 'black', textAlign: 'center' }}
 						>
@@ -688,7 +672,9 @@ export class AccommodationFacility extends Component {
 															handleChangeRooms={this.handleChangeRooms}
 															handleDeleteCard={this.handleDeleteCard}
 															isLoading={this.props.isLoading}
-															handleDeleteRoomChipCard={this.handleDeleteRoomChipCard}
+															handleDeleteRoomChipCard={
+																this.handleDeleteRoomChipCard
+															}
 															rooms={this.state.rooms}
 														/>
 													</div>
@@ -745,7 +731,9 @@ export class AccommodationFacility extends Component {
 															handleChangeRooms={this.handleChangeRooms}
 															handleDeleteCard={this.handleDeleteCard}
 															isLoading={this.props.isLoading}
-															handleDeleteRoomChipCard={this.handleDeleteRoomChipCard}
+															handleDeleteRoomChipCard={
+																this.handleDeleteRoomChipCard
+															}
 															rooms={this.state.rooms}
 														/>
 													</div>
@@ -793,7 +781,7 @@ export class AccommodationFacility extends Component {
 								</Grid>
 							</Hidden>
 						</Grid>
-						 <Box m={1} />
+						<Box m={1} />
 						<Grid container>
 							<Grid item xs={10}>
 								<ServiceCard
@@ -866,6 +854,6 @@ const connectedAccommodationFacilityPage = connect(mapStateToProps, {
 	createAccomodationFacility,
 	createAccommodationSuccess,
 	cardClicked,
-	handleDeleteAccommodation
+	handleDeleteAccommodation,
 })(withStyles(Styles)(AccommodationFacility));
 export default connectedAccommodationFacilityPage;
