@@ -266,7 +266,7 @@ export class NavLinks extends Component {
 								to='/create-accommodations'
 								style={{ textDecoration: 'none' }}
 							>
-								<Typography style={{ fontSize: '20px' }}>
+								<Typography >
 									Accommodations
 								</Typography>
 							</Link>
