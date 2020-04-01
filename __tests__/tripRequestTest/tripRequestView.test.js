@@ -25,6 +25,7 @@ const setUpEditTrip = (initialState = {}) => {
 	const store = testStore(initialState);
 	props.trip = [
 		{
+			id: 1,
 			reason: 'traveling',
 			accomodationId: 3,
 			From: 1,
@@ -47,7 +48,7 @@ const setUpEditTrip = (initialState = {}) => {
 
 describe('Trip Request component tests', () => {
 	it('should render successfully all breaks found in Trip Request view page', () => {
-		const wrapper = shallow(<TripRequest error={true} />);
+		const wrapper = shallow(<TripRequest error={true} {...props} />);
 		expect(wrapper.find('br').length).toBe(1);
 	});
 

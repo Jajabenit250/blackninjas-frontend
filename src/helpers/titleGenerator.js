@@ -11,6 +11,7 @@ export const titleGenerator = () => {
 const paths = [
 	{ pathName: '/trips', title: 'My Trip Requests' },
 	{ pathName: '/make-trip-request', title: 'Create Trip Request' },
+	{ pathName: '/edit-trip/:id', title: 'Edit Trip Request' },
 	{ pathName: '/profile', title: 'My Profile' },
 	{ pathName: '/trips-stats', title: 'Trips statistics' },
 	{ pathName: '/user/user-role-setting', title: 'User Role Settings' },

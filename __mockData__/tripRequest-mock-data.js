@@ -67,6 +67,7 @@ export const props = {
 	requestTrip: jest.fn(),
 	onClick: jest.fn(),
 	editTripRequest: jest.fn(),
+	setTitle: jest.fn(),
 };
 export const props2 = {
 	tripRequestReducer: {
@@ -134,4 +135,5 @@ export const props2 = {
 	GetAccomodations: jest.fn(),
 	requestTrip: jest.fn(),
 	onClick: jest.fn(),
+	setTitle: jest.fn(),
 };
